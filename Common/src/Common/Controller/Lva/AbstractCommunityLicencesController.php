@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Form\Form;
+use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
@@ -88,6 +89,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $filterForm = $this->getFilterForm()->setData($this->filters);
 
         $form = $this->getForm();
+        $this->alterFormForGoodsOrPsv($form);
         $this->alterFormForLva($form);
         $data = $this->formatDataForForm($this->getFormData());
         $form->setData($data);
@@ -95,6 +97,24 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter', 'community-licence']);
 
         return $this->render('community_licences', $form, ['filterForm' => $filterForm]);
+    }
+
+    /**
+     * Alter form for goods or psv
+     */
+    private function alterFormForGoodsOrPsv(Form $form)
+    {
+        $response = $this->handleQuery(
+            Licence::create(['id' => $this->getLicenceId()])
+        );
+        $licence = $response->getResult();
+
+        if ($licence['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_PSV) {
+            $activeLicencesElement = $form->get('data')->get('totalCommunityLicences');
+            $activeLicencesElement->setLabel(
+                $activeLicencesElement->getLabel() . '.psv'
+            );
+        }
     }
 
     /**
