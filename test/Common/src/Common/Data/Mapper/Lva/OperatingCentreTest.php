@@ -12,7 +12,6 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\RefData;
 
-
 /**
  * Operating Centre Test
  *
