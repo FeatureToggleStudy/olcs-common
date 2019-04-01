@@ -3796,6 +3796,8 @@ return [
     'permits.irhp.valid.permits.table.start-date' => 'Start date',
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
     'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application',
+    'permits.ecmt.short.cabotage.heading' => 'Short-term ECMT permits do not allow you to carry out cabotage',
+    'permits.ecmt.short.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between 2 points in the same country, carried out by a vehicle that is not registered in that country.',
     'continuations.vehicles.weight-kg' => 'kg',
     'continue.finance.history.button' => 'Continue to financial history',
 
